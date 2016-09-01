@@ -89,7 +89,8 @@ if (connTarget) {
   startDebugging(connTarget, actions).then((tabs) => {
     actions.newTabs(tabs);
     actions.selectTab({ id: connTarget.param });
-    renderRoot(App);
+    console.log("CREATE INSPECTOR PANEL!", typeof InspectorPanel);
+    // renderRoot(App);
   });
 } else if (isFirefoxPanel()) {
   // The toolbox already provides the tab to debug.
