@@ -89,8 +89,15 @@ if (connTarget) {
   startDebugging(connTarget, actions).then((tabs) => {
     actions.newTabs(tabs);
     actions.selectTab({ id: connTarget.param });
-    console.log("CREATE INSPECTOR PANEL!", typeof InspectorPanel);
-    // renderRoot(App);
+
+    console.log("Creating inspector panel with target:", firefox.getTabTarget());
+    let inspector = new Inspector.InspectorPanel(window, {
+      target: firefox.getTabTarget(),
+      _target: firefox.getTabTarget(),
+    });
+
+    console.log("Created inspector panel, about to open:", inspector)
+    inspector.open();
   });
 } else if (isFirefoxPanel()) {
   // The toolbox already provides the tab to debug.
