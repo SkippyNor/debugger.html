@@ -65,6 +65,9 @@ app.use(express.static("public"));
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
+app.get("/markup.xhtml", function(req, res) {
+  res.sendFile(path.join(__dirname, "../markup.xhtml"));
+});
 
 app.get("/get", function(req, res) {
   const httpReq = httpGet(

@@ -90,11 +90,24 @@ if (connTarget) {
     actions.newTabs(tabs);
     actions.selectTab({ id: connTarget.param });
 
-    console.log("Creating inspector panel with target:", firefox.getTabTarget());
-    let inspector = new Inspector.InspectorPanel(window, {
+    let fakeToolbox = {
       target: firefox.getTabTarget(),
       _target: firefox.getTabTarget(),
-    });
+      hostType: "bottom",
+      doc: window.document,
+      win: window,
+      on() {}, emit() {}, off() {},
+      initInspector() {},
+      React: React,
+      ReactDOM: ReactDOM,
+      browserRequire: require,
+      isToolRegistered() {
+        return false;
+      },
+    };
+
+    console.log("Creating inspector panel with fake toolbox", fakeToolbox);
+    let inspector = new Inspector.InspectorPanel(window, fakeToolbox);
 
     console.log("Created inspector panel, about to open:", inspector)
     inspector.open();
