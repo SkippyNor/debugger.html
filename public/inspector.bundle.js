@@ -258,7 +258,7 @@ var Inspector =
 	    this.selection.on("before-new-node-front", this.onBeforeNewSelection);
 	    this.selection.on("detached-front", this.onDetached);
 
-	    // this.breadcrumbs = new HTMLBreadcrumbs(this);
+	    this.breadcrumbs = new HTMLBreadcrumbs(this);
 
 	    if (this.target.isLocalTab) {
 	      // Show a warning when the debugger is paused.
@@ -801,10 +801,10 @@ var Inspector =
 	   * When a new node is selected, before the selection has changed.
 	   */
 	  onBeforeNewSelection: function (event, node) {
-	    // if (this.breadcrumbs.indexOf(node) == -1) {
-	    //   // only clear locks if we'd have to update breadcrumbs
-	    //   this.clearPseudoClasses();
-	    // }
+	    if (this.breadcrumbs.indexOf(node) == -1) {
+	      // only clear locks if we'd have to update breadcrumbs
+	      this.clearPseudoClasses();
+	    }
 	  },
 
 	  /**
@@ -813,7 +813,7 @@ var Inspector =
 	   * node was selected).
 	   */
 	  onDetached: function (event, parentNode) {
-	    // this.breadcrumbs.cutAfter(this.breadcrumbs.indexOf(parentNode));
+	    this.breadcrumbs.cutAfter(this.breadcrumbs.indexOf(parentNode));
 	    this.selection.setNodeFront(parentNode ? parentNode : this._defaultNode, "detached");
 	  },
 
@@ -861,7 +861,7 @@ var Inspector =
 	    this.sidebar = null;
 
 	    this.teardownToolbar();
-	    // this.breadcrumbs.destroy();
+	    this.breadcrumbs.destroy();
 	    this.selection.off("new-node-front", this.onNewSelection);
 	    this.selection.off("before-new-node-front", this.onBeforeNewSelection);
 	    this.selection.off("detached-front", this.onDetached);
